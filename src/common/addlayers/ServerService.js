@@ -33,9 +33,7 @@ var SERVER_SERVICE_USE_PROXY = true;
     };
 
     this.getCatalogList = function() {
-      if (configService_.configuration.registryEnabled === true) {
-        return catalogList;
-      }
+      return catalogList;
     };
 
     this.getServers = function() {
@@ -231,7 +229,7 @@ var SERVER_SERVICE_USE_PROXY = true;
       }
       if (goog.isDefAndNotNull(url)) {
         if (url.indexOf(currentDomain) > -1) {
-          wfsurl = 'http://' + location.host + '/wfsproxy/';
+          wfsurl = location.protocol + '//' + location.host + '/wfsproxy/';
           return wfsurl;
         }
       }
