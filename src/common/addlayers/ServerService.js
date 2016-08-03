@@ -221,21 +221,18 @@ var SERVER_SERVICE_USE_PROXY = true;
     };
 
     this.getWfsRequestUrl = function(url) {
-      var wfsurl = null;
+      var wfsurl;
       var currentDomain = locationService_.host();
-      if (url.indexOf('/wms') > -1) {
-        var splitUrl = url.split('/wms');
-        url = splitUrl[0];
-      }
       if (goog.isDefAndNotNull(url)) {
+        if (url.indexOf('/wms') > -1) {
+          var splitUrl = url.split('/wms');
+          url = splitUrl[0];
+        }
         if (url.indexOf(currentDomain) > -1) {
           wfsurl = location.protocol + '//' + location.host + '/wfsproxy/';
-          return wfsurl;
         }
       }
-      if (url.indexOf('/WfsDispatcher') === -1) {
-        wfsurl = url + '/wfs/WfsDispatcher';
-      }
+      wfsurl = url + '/wfs/WfsDispatcher';
       return wfsurl;
     };
 
