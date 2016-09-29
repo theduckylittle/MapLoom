@@ -218,6 +218,8 @@
             } else {
               nextLayer(nextIndex);
             }
+          } else {
+            mapService_.dumpTileCache(metadata.uniqueID);
           }
         };
         processLayer(layers[0], 1);
