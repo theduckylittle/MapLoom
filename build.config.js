@@ -97,7 +97,9 @@ module.exports = {
       'vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js',
 
       'vendor/bootstrap-sortable/Scripts/bootstrap-sortable.js',
-      'vendor/angular-xeditable/dist/js/xeditable.min.js'
+      'vendor/angular-xeditable/dist/js/xeditable.min.js',
+
+      'vendor/node-uuid/uuid.js'
     ],
     css: [
       'vendor/ol3/ol.css',

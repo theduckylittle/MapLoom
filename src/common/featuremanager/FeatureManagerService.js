@@ -666,7 +666,16 @@
         propertyXmlPartial += '<feature:' + selectedItem_.geometry_name + '>' + featureGML + '</feature:' +
             selectedItem_.geometry_name + '>';
 
+        var generatedUuid = uuid.v1();
+
         goog.array.forEach(properties, function(property, index) {
+          // For the "bikepath" and "building" layers, set the "primary key" to a UUID
+          if (selectedLayer_.get('metadata').name.includes('bikepath') || selectedLayer_.get('metadata').includes('building')) {// &&
+            if (property[0] === 'gid') {
+              property[1] = generatedUuid;
+            }
+          }
+
           if (property[1] === '') {
             property[1] = null;
           }
