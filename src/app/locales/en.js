@@ -149,6 +149,7 @@
     'commit_time': 'Commit Time',
     'message': 'Message',
     'export_csv': 'Export CSV',
+    'export_shp': 'Export SHP',
     'sure_delete_feature': 'Are you sure you want to delete this feature?',
     'drawing_geometry': 'Drawing Geometry',
     'adding_feature': 'Adding Feature',

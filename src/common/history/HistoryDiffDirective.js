@@ -121,6 +121,20 @@
                   path + '&sinceTime=' + sinceTime + '&untilTime=' + untilTime + '&summary=true';
               $window.open(url);
             };
+
+            scope.exportSHP = function() {
+              var repo = geogigService.getRepoById(historyService.layer.get('metadata').repoId);
+              var startTime = new Date(scope.startDate[0]).getTime();
+              var endTime = new Date(scope.endDate[0]).getTime();
+              var untilTime = startTime < endTime ? endTime : startTime;
+              var sinceTime = startTime < endTime ? startTime : endTime;
+              var path = historyService.pathFilter;
+              var until = historyService.layer.get('metadata').branchName;
+              // TODO: Make this work with a proxy once it supports authentication
+              var url = repo.url + '/log.zip?until=' + until + '&path=' +
+                  path + '&sinceTime=' + sinceTime + '&untilTime=' + untilTime + '&summary=true';
+              $window.open(url);
+            };
           }
         };
       }
