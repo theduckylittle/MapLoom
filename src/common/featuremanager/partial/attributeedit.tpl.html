@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div ng-if="!featureManagerService.isMediaPropertyName(prop[0])">
+      <div ng-if="!featureManagerService.isMediaPropertyName(prop[0]) && isAttributeVisible(prop[0])">
         <label class="control-label custom-control-label">{{prop[0]}}</label>
         <div ng-switch on="prop.type">
           <datetimepicker ng-switch-when="xsd:dateTime" date-object="prop[1]" default-date="inserting"></datetimepicker>
@@ -82,6 +82,8 @@
           </div>
         </div>
       </div>
+      <input ng-if="!featureManagerService.isMediaPropertyName(prop[0]) && !isAttributeVisible(prop[0])" type="hidden"
+             name="{{prop[0]}}" ng-value="prop[1]" />
     </div>
   </form>
 </div>
