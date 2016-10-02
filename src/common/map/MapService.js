@@ -773,6 +773,22 @@
         } else if (server.ptype === 'gxp_olsource') {
           dialogService_.error(translate_.instant('add_layers'), translate_.instant('layer_type_not_supported',
               {type: 'gxp_olsource'}));
+        } else if (server.ptype === 'gxp_arcrestsource') {
+          var attribution = new ol.Attribution({
+            html: 'Tiles &copy; <a href="' + server.url + '">ArcGIS</a>'
+          });
+          layer = new ol.layer.Tile({
+            metadata: {
+              serverId: server.id,
+              name: minimalConfig.name,
+              title: fullConfig.Title
+            },
+            visible: minimalConfig.visibility,
+            source: new ol.source.XYZ({
+              attributions: [attribution],
+              url: server.url + 'tile/{z}/{y}/{x}'
+            })
+          });
         }
       }
 
