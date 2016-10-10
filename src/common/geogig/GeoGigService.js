@@ -5,7 +5,7 @@
   var nextRepoId = 0;
 
   // services
-  var q, http, rootScope, dialogService_, translate_;
+  var q, http, rootScope, dialogService_, translate_, timeout;
 
   var service_ = null;
 
@@ -35,13 +35,14 @@
     this.repos = [];
     this.adminRepos = [];
 
-    this.$get = function($q, $http, $rootScope, dialogService, $translate) {
+    this.$get = function($q, $http, $rootScope, dialogService, $translate, $timeout) {
       service_ = this;
       q = $q;
       http = $http;
       rootScope = $rootScope;
       dialogService_ = dialogService;
       translate_ = $translate;
+      timeout = $timeout;
       rootScope.$on('layerRemoved', service_.removedLayer);
       return service_;
     };
@@ -481,6 +482,54 @@
       } else {
         deferredResponse.reject();
       }
+      return deferredResponse.promise;
+    };
+
+    this.exportNycDoitt = function(layer) {
+      /* jshint es5: true */
+
+      var x2js = new X2JS();
+      var deferredResponse = q.defer();
+
+      var repo = service_.getRepoById(layer.get('metadata').repoId);
+      var exportUrl = repo.url + '/export?format=zip&path=bikepath&doitt=true';
+
+      // Modifies the URL to handle internal vs external DNS.
+      var modifyUrl = function(url) {
+        var base = exportUrl.split('/').slice(0, 3).join('/');
+        return base + '/' + url.split('/').slice(3).join('/');
+      };
+
+      var taskResponseHandler = function(taskUrl) {
+        return http.get(taskUrl).then(function(taskResponse) {
+          var result = x2js.xml_str2json(taskResponse.data);
+          var status = result['task']['status'];
+
+          switch (status) {
+            case 'FINISHED':
+              return modifyUrl(result['task']['result']['link']['_href']);
+            case 'RUNNING':
+              return timeout(function() {
+                return taskResponseHandler(taskUrl);
+              }, 5000);
+            default:
+              return q.reject();
+          }
+        });
+      };
+
+      http.get(exportUrl)
+          .then(function(response) {
+            var result = x2js.xml_str2json(response.data);
+            return modifyUrl(result['task']['link']['_href']);
+          })
+          .then(taskResponseHandler)
+          .then(function(downloadUrl) {
+            deferredResponse.resolve(downloadUrl);
+          })
+          .catch (function() {
+            deferredResponse.reject();
+          });
       return deferredResponse.promise;
     };
   });

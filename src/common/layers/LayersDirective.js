@@ -4,7 +4,7 @@
 
   module.directive('loomLayers',
       function($rootScope, mapService, serverService, historyService, featureManagerService,
-               dialogService, $translate, tableViewService) {
+               dialogService, $translate, tableViewService, geogigService, $window) {
         return {
           restrict: 'C',
           replace: true,
@@ -131,6 +131,22 @@
 
             scope.getLayerAttributeVisibility = function(layer) {
               $rootScope.$broadcast('getLayerAttributeVisibility', layer);
+            };
+
+            scope.isExportingNycDoitt = function(layer) {
+              var exportingShapefile = layer.get('metadata').exportingNycDoitt;
+              return goog.isDefAndNotNull(exportingShapefile) && exportingShapefile === true;
+            };
+
+            scope.exportLayerNycDoitt = function(layer) {
+              layer.get('metadata').exportingNycDoitt = true;
+              geogigService.exportNycDoitt(layer).then(function(result) {
+                layer.get('metadata').exportingNycDoitt = false;
+                $window.open(result);
+              }, function() {
+                layer.get('metadata').exportingNycDoitt = false;
+                dialogService.error($translate.instant('error'), $translate.instant('export_layer_failed'), [], true);
+              });
             };
           }
         };
