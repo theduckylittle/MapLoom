@@ -178,6 +178,7 @@
               scope.currentPage = tableViewService.currentPage + 1;
               scope.totalPages = tableViewService.totalPages;
               scope.totalFeatures = tableViewService.totalFeatures;
+              scope.humanReadableAttributes = featureManagerService.getFieldMappings(tableViewService.selectedLayer);
             };
 
             var clearSession = function() {

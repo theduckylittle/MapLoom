@@ -8,7 +8,7 @@
     <div class="form-group" ng-repeat="prop in properties">
 
       <div ng-if="featureManagerService.isMediaPropertyName(prop[0])">
-        <label class="control-label custom-control-label">{{prop[0]}}</label>
+        <label class="control-label custom-control-label">{{ featureManagerService.getFieldMapping(featureManagerService.getSelectedLayer(), prop[0]) }}</label>
 
         <div class="media-list" ng-if="prop[1].length > 0">
           <div ng-repeat="photo in prop[1] track by $index" style="padding-right: 10px;">
@@ -28,7 +28,7 @@
       </div>
 
       <div ng-if="!featureManagerService.isMediaPropertyName(prop[0]) && isAttributeVisible(prop[0])">
-        <label class="control-label custom-control-label">{{prop[0]}}</label>
+        <label class="control-label custom-control-label">{{ featureManagerService.getFieldMapping(featureManagerService.getSelectedLayer(), prop[0]) }}</label>
         <div ng-switch on="prop.type">
           <datetimepicker ng-switch-when="xsd:dateTime" date-object="prop[1]" default-date="inserting"></datetimepicker>
           <datetimepicker ng-switch-when="xsd:date" date-object="prop[1]" default-date="inserting" time="false"></datetimepicker>

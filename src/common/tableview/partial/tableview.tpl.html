@@ -42,7 +42,7 @@
           </tr>
           <tr>
             <th>{{'feature_id' | translate}}</th>
-            <th ng-repeat="attr in attributes" class="pointer" ng-click="selectAttribute(attr)" ng-class="{selectedAttribute: attr.selected}">{{attr.name}}</th>
+            <th ng-repeat="attr in attributes" class="pointer" ng-click="selectAttribute(attr)" ng-class="{selectedAttribute: attr.selected}">{{ humanReadableAttributes[attr.name] ? humanReadableAttributes[attr.name] : attr.name }}</th>
           </tr>
         </thead>
         <tr ng-repeat="row in rows" ng-class="{selectedRow: row.selected}" ng-click="selectFeature(row)">

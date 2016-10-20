@@ -950,6 +950,39 @@
     };
 
     this.getGeometryGML3FromFeature = getGeometryGML3FromFeature;
+
+    this.getFieldMappings = function(layer) {
+      var mapping = {
+        'bikepath': {
+          'BikeDir': 'Bike Direction',
+          'BikeRtCond': 'Bike Route Conditions',
+          'FromStreet': 'From Street',
+          'Impediment': 'Impediments',
+          'NewRt_Y_N': 'Suggested New Route Y/N',
+          'Notes': 'Notes',
+          'PhysicalID': 'Physical ID',
+          'SegmentID': 'Segment ID',
+          'Street': 'Street',
+          'ToStreet': 'To Street',
+          'TraffCond': 'Traffic Conditions'
+        }
+      };
+
+      var name = '';
+      if (layer.get('metadata').name.includes('bikepath')) {
+        name = 'bikepath';
+      }
+
+      return mapping[name];
+    };
+
+    this.getFieldMapping = function(layer, field) {
+      if (this.getFieldMappings(layer) && this.getFieldMappings(layer)[field]) {
+        return this.getFieldMappings(layer)[field];
+      } else {
+        return field;
+      }
+    };
   });
 
   //-- Private functions
