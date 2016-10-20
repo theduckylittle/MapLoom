@@ -201,6 +201,8 @@
       this.title = configService_.configuration.about.title;
       this.abstract = configService_.configuration.about.abstract;
       this.id = configService_.configuration.id;
+      this.refresh_interval = configService_.configuration.refresh_interval;
+      this.auto_refresh = configService_.configuration.auto_refresh;
       this.save_method = 'POST';
 
       if (goog.isDefAndNotNull(this.id) && this.id) {
@@ -1072,7 +1074,9 @@
           projection: service_.getProjection(),
           layers: []
         },
-        sources: []
+        sources: [],
+        auto_refresh: service_.auto_refresh,
+        refresh_interval: service_.refresh_interval
       };
 
       goog.array.forEach(serverService_.getServers(), function(server, key, obj) {

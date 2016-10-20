@@ -326,7 +326,9 @@
     'spatial_filter': 'Spatial Filter',
     'enter_spatial_filter_radius': 'Enter the spatial filter\'s radius, in meters',
     'add_spatial_filter': 'Add Spatial Filter',
-    'enter_radius': 'Enter Radius'
+    'enter_radius': 'Enter Radius',
+    'enable_auto_refresh': 'Enable Auto-refresh',
+    'refresh_interval': 'Auto-refresh interval, in seconds'
   };
 
   var module = angular.module('loom_translations_en', ['pascalprecht.translate']);

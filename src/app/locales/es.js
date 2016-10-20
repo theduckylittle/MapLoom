@@ -321,7 +321,9 @@
     'standard_deviation': 'Desviacion Estandar',
     'count': 'Cuentas',
     'populated_count': 'Llenado Cuentas',
-    'unique_values': 'Valor Único'
+    'unique_values': 'Valor Único',
+    'enable_auto_refresh': 'Enable Auto-refresh',
+    'refresh_interval': 'Auto-refresh interval, in seconds'
   };
 
   var module = angular.module('loom_translations_es', ['pascalprecht.translate']);

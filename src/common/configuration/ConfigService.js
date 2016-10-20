@@ -106,7 +106,9 @@
         fileserviceUploadUrl: '/api/fileservice/',
         registryEnabled: true,
         serverLocation: serverLocation,
-        searchApiURL: serverLocation + '/registry/api/catalogs/'
+        searchApiURL: serverLocation + '/registry/api/catalogs/',
+        auto_refresh: true,
+        refresh_interval: 30
       };
 
       if (goog.isDefAndNotNull($window.config)) {
@@ -118,6 +120,8 @@
       this.user_profile_name = this.configuration.userprofilename;
       this.user_profile_email = this.configuration.userprofileemail;
       this.user_name = this.configuration.username;
+      this.auto_refresh = this.configuration.auto_refresh || false;
+      this.refresh_interval = this.configuration.refresh_interval || 0;
       this.proxy = this.configuration.proxy;
       this.csrfToken = $cookies.csrftoken;
 
