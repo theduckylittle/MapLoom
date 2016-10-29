@@ -477,10 +477,10 @@ var SERVER_SERVICE_USE_PROXY = true;
         config = {
           ptype: 'gxp_arcrestsource',
           name: 'Esri',
-          proj: 'EPSG:4326',
+          proj: 'EPSG:3857',
           defaultServer: true,
           alwaysAnonymous: true,
-          url: 'https://services.arcgisonline.com/arcgis/rest/services/NGS_Topo_US_2D/MapServer/'
+          url: 'https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/'
         };
         service_.addServer(config);
       } else {
@@ -930,11 +930,11 @@ var SERVER_SERVICE_USE_PROXY = true;
             for (var k = 0; k < configMapLayers.length; k++) {
               if (configMapLayers[k]['source'] === esriIndex) {
                 var cnf = {
-                  Title: configMapLayers[k].title || 'NGS Topographic',
-                  Name: configMapLayers[k].name || 'NGS_Topo_US_2D',
-                  proj: configMapLayers[k].proj || 'EPSG:4326',
+                  Title: configMapLayers[k].title || 'World Imagery',
+                  Name: configMapLayers[k].name || 'World_Imagery',
+                  proj: configMapLayers[k].proj || 'EPSG:3857',
                   sourceParams: {
-                    layer: configMapLayers[k].name || 'NGS_Topo_US_2D'
+                    layer: configMapLayers[k].name || 'World_Imagery'
                   }
                 };
                 lyrsCfg.push(cnf);
@@ -949,7 +949,7 @@ var SERVER_SERVICE_USE_PROXY = true;
             server.layersConfig = esriLayersConfig;
           } else {
             server.layersConfig = [
-              {Title: 'NGS Topographic', Name: 'NGS_Topo_US_2D', proj: 'EPSG:4326', sourceParams: {layer: 'NGS_Topo_US_2D'}}
+              {Title: 'World Imagery', Name: 'World_Imagery', proj: 'EPSG:3857', sourceParams: {layer: 'World_Imagery'}}
             ];
           }
 
