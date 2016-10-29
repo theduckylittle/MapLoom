@@ -507,30 +507,6 @@ var SERVER_SERVICE_USE_PROXY = true;
       } else {
         service_.getServerByPtype('gxp_osmsource').defaultServer = true;
       }
-
-      if (!goog.isDefAndNotNull(service_.getServerByPtype('gxp_arcrestsource'))) {
-        config = {
-          ptype: 'gxp_arcrestsource',
-          name: 'Esri',
-          defaultServer: true,
-          alwaysAnonymous: true,
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/'
-        };
-        service_.addServer(config);
-      } else {
-        service_.getServerByPtype('gxp_arcrestsource').defaultServer = true;
-      }
-
-      if (goog.isDefAndNotNull(service_.getRegistryLayerConfig())) {
-        service_.getRegistryLayerConfig().defaultServer = true;
-      }
-    };
-
-    this.getLayersConfigByName = function(server_name) {
-      var server = service_.getServerByName(server_name);
-      if (goog.isDefAndNotNull(server)) {
-        return server.layersConfig;
-      }
     };
 
     this.getLayersConfig = function(serverId) {
@@ -1113,15 +1089,6 @@ var SERVER_SERVICE_USE_PROXY = true;
           } else {
             deferredResponse = service_.populateLayersConfigInelastic(server, force, deferredResponse);
           }
-        } else if (server.ptype === 'gxp_arcrestsource') {
-          server.defaultServer = true;
-          if (!goog.isDefAndNotNull(server.name)) {
-            server.name = 'World Imagery';
-          }
-          server.layersConfig = [
-            {Title: 'World Imagery', Name: 'World Imagery', sourceParams: {layer: 'World_Imagery'}}
-          ];
-          deferredResponse.resolve(server);
         } else {
           deferredResponse.reject();
         }
