@@ -98,8 +98,8 @@ module.exports = {
 
       'vendor/bootstrap-sortable/Scripts/bootstrap-sortable.js',
       'vendor/angular-xeditable/dist/js/xeditable.min.js',
-
-      'vendor/node-uuid/uuid.js'
+      'vendor/node-uuid/uuid.js',
+      'vendor/angularjs-slider/dist/rzslider.min.js'
     ],
     css: [
       'vendor/ol3/ol.css',
@@ -114,7 +114,9 @@ module.exports = {
 
       'vendor/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
       'vendor/bootstrap-sortable/Contents/bootstrap-sortable.css',
-      'vendor/angular-xeditable/dist/css/xeditable.css'
+      'vendor/angular-xeditable/dist/css/xeditable.css',
+      'vendor/angularjs-slider/dist/rzslider.min.css',
+      'vendor/components-font-awesome/css/font-awesome.min.css'
     ],
     assets: [
       'src/assets/*',
@@ -122,7 +124,8 @@ module.exports = {
       'vendor/blueimp-bootstrap-image-gallery/img/*'
     ],
     fonts: [
-      'vendor/bootstrap/fonts/*'
+      'vendor/bootstrap/fonts/*',
+      'vendor/components-font-awesome/fonts/*',
     ]
   }
 };

@@ -87,20 +87,17 @@
                             dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
                             transaction.abort();
                             scope.cancel();
-                            console.log('ERROR: EndTransaction failure: ', endTransactionFailure);
                           }
                         });
                       }, function(commitFailure) {
                         dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
                         transaction.abort();
                         scope.cancel();
-                        console.log('ERROR: Commit failure: ', commitFailure);
                       });
                     }, function(statusFailure) {
                       dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
                       transaction.abort();
                       scope.cancel();
-                      console.log('ERROR: Status failure: ', statusFailure);
                     });
                   }, function(mergeFailure) {
                     if (goog.isObject(mergeFailure) && goog.isDefAndNotNull(mergeFailure.conflicts)) {
@@ -111,18 +108,15 @@
                       dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
                       transaction.abort();
                       scope.cancel();
-                      console.log('ERROR: Merge failure: ', mergeOptions, mergeFailure);
                     }
                   });
                 }, function(checkoutFailure) {
                   dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
                   transaction.abort();
                   scope.cancel();
-                  console.log('ERROR: Checkout failure: ', checkoutOptions, checkoutFailure);
                 });
               }, function(beginTransactionFailure) {
                 dialogService.error($translate.instant('error'), $translate.instant('merge_unknown_error'));
-                console.log('ERROR: Begin transaction failure: ', beginTransactionFailure);
                 scope.cancel();
               });
             };
@@ -138,8 +132,8 @@
 
   function handleConflicts(mergeFailure, transaction, dialogService, conflictService, translate,
                            ourName, theirName, scope, mergeBranch) {
-    var myDialog = dialogService.warn(translate('merge_conflicts'), translate('conflicts_encountered'),
-        [translate('abort'), translate('resolve_conflicts')], false);
+    var myDialog = dialogService.warn(translate.instant('merge_conflicts'), translate.instant('conflicts_encountered'),
+        [translate.instant('abort'), translate.instant('resolve_conflicts')], false);
 
     myDialog.then(function(button) {
       switch (button) {
