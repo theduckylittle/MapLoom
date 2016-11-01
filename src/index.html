@@ -71,7 +71,8 @@
         csrfToken: "{{ csrf_token }}",
         tools: [{ptype: "gxp_getfeedfeatureinfo"}],
         registryEnabled: registryEnabled(),
-        nominatimSearchEnabled: nominatimSearchEnabled()
+        nominatimSearchEnabled: nominatimSearchEnabled(),
+        admin: {% if user.is_authenticated and user.is_staff %} false {% else %} false {% endif %},
     };
     goog.object.extend( config, {{ config|safe }});
 </script>

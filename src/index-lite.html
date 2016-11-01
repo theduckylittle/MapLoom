@@ -50,6 +50,7 @@
         endif %
       }
     ,
+    admin: {% if user.is_authenticated and user.is_staff %} true {% else %} false {% endif %},
       userprofilename: {%
         if user.is_authenticated %}
         "{{ user.get_full_name }}"
