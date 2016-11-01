@@ -130,7 +130,7 @@
               var until = historyService.layer.get('metadata').branchName;
               // TODO: Make this work with a proxy once it supports authentication
               var url = repo.url + '/log.zip?until=' + until + '&path=' +
-                  path + '&sinceTime=' + sinceTime + '&untilTime=' + untilTime + '&summary=true';
+                  path + '&sinceTime=' + sinceTime + '&untilTime=' + untilTime + '&summary=true&zip=true';
               $window.open(url);
             };
           }
