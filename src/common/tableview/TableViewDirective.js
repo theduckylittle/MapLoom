@@ -499,6 +499,17 @@
                 });
               }
             };
+
+            scope.isAttributeVisible = function(property) {
+              var schema = tableViewService.selectedLayer.get('metadata').schema;
+
+              // if there is no schema, show the attribute. only filter out if there is schema and attr is set to hidden
+              if (!goog.isDefAndNotNull(schema) || !schema.hasOwnProperty(property)) {
+                return true;
+              }
+
+              return schema[property].visible;
+            };
           }
         };
       });

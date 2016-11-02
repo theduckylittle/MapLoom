@@ -36,17 +36,18 @@
               </td>
               <td class="filter-row" ng-repeat="attr in attributes">
                   <!--<input class="form-control" type="text" ng-model="attr.filter.text">-->
-                  <filteroptions attribute="attr" type="restrictions[attr.name].type"></filteroptions>
+                  <filteroptions attribute="attr" type="restrictions[attr.name].type" ng-show="isAttributeVisible(attr.name)"></filteroptions>
               </td>
           </tr>
           <tr>
             <th>{{'feature_id' | translate}}</th>
-            <th ng-repeat="attr in attributes" class="pointer" ng-click="selectAttribute(attr)" ng-class="{selectedAttribute: attr.selected}">{{ humanReadableAttributes[attr.name] ? humanReadableAttributes[attr.name] : attr.name }}</th>
+            <th ng-repeat="attr in attributes" class="pointer" ng-click="selectAttribute(attr)" ng-class="{selectedAttribute: attr.selected}" ng-show="isAttributeVisible(attr.name)">{{ humanReadableAttributes[attr.name] ? humanReadableAttributes[attr.name] : attr.name }}</th>
           </tr>
         </thead>
         <tr ng-repeat="row in rows" ng-class="{selectedRow: row.selected}" ng-click="selectFeature(row)">
           <td>{{row.feature.id}}</td>
-          <td ng-repeat="attr in attributes track by $index" ng-class="{'table-editing': tableviewform.$visible}">
+          <td ng-repeat="attr in attributes track by $index" ng-class="{'table-editing': tableviewform.$visible}"
+              ng-show="isAttributeVisible(attr.name)">
             <div ng-switch on="restrictions[attr.name].type" ng-class="{'wide-table-element': advFilters}">
               <span ng-switch-when="" editable-text="row.feature.properties[attr.name]" e-form="tableviewform"
                     e-style="width:160px">{{row.feature.properties[attr.name]}}</span>
