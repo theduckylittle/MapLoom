@@ -979,7 +979,9 @@
           'SegmentID': 'Segment ID',
           'Street': 'Street',
           'ToStreet': 'To Street',
-          'TraffCond': 'Traffic Conditions'
+          'TraffCond': 'Traffic Conditions',
+          'fromTocl': 'FromTo Class',
+          'toFromcl': 'ToFrom Class'
         }
       };
 
