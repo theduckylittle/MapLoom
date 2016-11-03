@@ -5,7 +5,10 @@
       <label for="latLonEdit" class="control-label custom-control-label">{{'location_lon_lat' | translate}}</label>
       <latloneditor id="latLonEdit" coord-display="coordDisplay" geom="coordinates"></latloneditor>
     </div>
-    <div class="form-group" ng-repeat="prop in properties">
+    <div class="form-group" ng-repeat="prop in properties"
+         ng-init="readonly = (!inserting && featureManagerService.getSelectedLayer().get('metadata').name.includes('bikepath') &&
+                              (prop[0] === 'Street' || prop[0] === 'SegmentID' || prop[0] === 'PhysicalID' ||
+                               prop[0] === 'BikeDir' || prop[0] === 'FromStreet' || prop[0] === 'ToStreet'))">
 
       <div ng-if="featureManagerService.isMediaPropertyName(prop[0])">
         <label class="control-label custom-control-label">{{ featureManagerService.getFieldMapping(featureManagerService.getSelectedLayer(), prop[0]) }}</label>
@@ -54,16 +57,16 @@
             <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)" disabled/>
           </div>
           <div ng-switch-when="xsd:int" ng-class="{'has-error': !prop.valid}">
-            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)"/>
+            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)" ng-readonly="{{readonly}}"/>
           </div>
           <div ng-switch-when="xsd:integer" ng-class="{'has-error': !prop.valid}">
-            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)"/>
+            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)" ng-readonly="{{readonly}}"/>
           </div>
           <div ng-switch-when="xsd:double" ng-class="{'has-error': !prop.valid}">
-            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)"/>
+            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)" ng-readonly="{{readonly}}"/>
           </div>
           <div ng-switch-when="xsd:decimal" ng-class="{'has-error': !prop.valid}">
-            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)"/>
+            <input ng-model="prop[1]" type="text" class="form-control" ng-change="validateField(prop, 1)" ng-readonly="{{readonly}}"/>
           </div>
           <div ng-switch-when="xsd:boolean" class="input-group"  ng-class="{'has-error': !prop.valid}">
             <div class="input-group-btn" ng-class="{'dropup': $last}">
@@ -82,7 +85,7 @@
             <input value="{{translate(prop[1])}}" type="text" class="form-control" disabled/>
           </div>
           <div ng-switch-default  ng-class="{'has-error': !prop.valid}">
-            <autotextarea ng-model="prop[1]" class="form-control custom-form-control auto-text-area" ng-change="validateField(prop, 1)"></autotextarea>
+            <autotextarea ng-model="prop[1]" class="form-control custom-form-control auto-text-area" ng-change="validateField(prop, 1)" ng-readonly="{{readonly}}"></autotextarea>
           </div>
         </div>
       </div>
