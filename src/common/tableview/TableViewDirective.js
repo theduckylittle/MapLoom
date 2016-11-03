@@ -77,6 +77,7 @@
             scope.search = {isSearching: false, text: ''};
             scope.advFilters = false;
             scope.spatialFilter = tableViewService.getSpatialFilter();
+            scope.selectedLayer = '';
 
             function resizeModal() {
               var containerHeight = angular.element('#table-view-window .modal-content')[0].clientHeight;
@@ -169,6 +170,7 @@
               //scope.advFilters = false;
               scope.selectedAttribute = null;
               //wipeFilterFields();
+              scope.selectedLayer = tableViewService.selectedLayer.get('metadata').name;
             };
 
             var updateData = function() {
