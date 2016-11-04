@@ -28,9 +28,9 @@
                 for (i = 0; i < featureDiffService.right.attributes.length; i++) {
                   attr = featureDiffService.right.attributes[i];
                   if (attr.changetype !== 'NO_CHANGE') {
-                    scope.arrows.push({active: true});
+                    scope.arrows.push({active: true, attributename: attr.attributename});
                   } else {
-                    scope.arrows.push({active: false});
+                    scope.arrows.push({active: false, attributename: attr.attributename});
                   }
                 }
               } else {
@@ -42,9 +42,9 @@
                   attr = scope.panel.attributes[i];
                   if (featureDiffService.attributesEqual(attr, featureDiffService.merged.attributes[i]) &&
                       attr.changetype !== 'NO_CHANGE') {
-                    scope.arrows.push({active: true});
+                    scope.arrows.push({active: true, attributename: attr.attributename});
                   } else {
-                    scope.arrows.push({active: false});
+                    scope.arrows.push({active: false, attributename: attr.attributename});
                   }
                 }
               }
@@ -61,6 +61,17 @@
               if (scope.hover) {
                 featureDiffService.chooseAttribute(index, scope.panel);
               }
+            };
+
+            scope.isAttributeVisible = function(property) {
+              var schema = featureDiffService.layer.get('metadata').schema;
+
+              // if there is no schema, show the attribute. only filter out if there is schema and attr is set to hidden
+              if (!goog.isDefAndNotNull(schema) || !schema.hasOwnProperty(property)) {
+                return true;
+              }
+
+              return schema[property].visible;
             };
 
             var initialize = function() {

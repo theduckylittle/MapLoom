@@ -19,8 +19,8 @@
     <input ng-if="isConflictPanel" value="--------------------------------------" type="text" readOnly="readOnly"
            class="geom-author form-control attr-none" placeholder="">
   </div>
-  <span ng-repeat="attribute in panel.attributes" class="">
-    <span class="info-box-attribute ellipsis">{{attribute.attributename}}</span>
+  <span ng-repeat="attribute in panel.attributes" class="" ng-show="isAttributeVisible(attribute.attributename)">
+    <span class="info-box-attribute ellipsis">{{ humanReadableAttributes[attribute.attributename] ? humanReadableAttributes[attribute.attributename] : attribute.attributename }}</span>
             <div ng-switch on="attribute.type" class="attribute-value-section">
               <div ng-switch-when="xsd:dateTime" ng-class="{
                         'attr-added': attribute.changetype == 'ADDED',

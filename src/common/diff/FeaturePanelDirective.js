@@ -3,7 +3,7 @@
   var module = angular.module('loom_feature_panel_directive', []);
 
   module.directive('loomFeaturePanel',
-      function($rootScope, $translate, mapService, $timeout, featureDiffService, featureBlameService) {
+      function($rootScope, $translate, mapService, $timeout, featureDiffService, featureBlameService, featureManagerService) {
         return {
           restrict: 'C',
           scope: {
@@ -14,6 +14,7 @@
           link: function(scope, element, attrs) {
             scope.mapid = attrs.mapid;
             scope.authorsShown = false;
+            scope.humanReadableAttributes = {};
 
             var target = 'preview-map-' + scope.mapid;
             var loadingtarget = '#loading-' + scope.mapid;
@@ -23,6 +24,7 @@
               scope.authorsShown = false;
               scope.isMergePanel = scope.panel === featureDiffService.merged;
               scope.isConflictPanel = scope.isMergePanel && featureDiffService.change !== 'MERGED';
+              scope.humanReadableAttributes = (featureDiffService.layer) ? featureManagerService.getFieldMappings(featureDiffService.layer) : {};
 
               if (scope.isMergePanel) {
                 scope.$watch('panel.attributes', function() {
@@ -103,6 +105,17 @@
                   (property[key] === '' || property[key] === null)) {
                 property.valid = false;
               }
+            };
+
+            scope.isAttributeVisible = function(property) {
+              var schema = featureDiffService.layer.get('metadata').schema;
+
+              // if there is no schema, show the attribute. only filter out if there is schema and attr is set to hidden
+              if (!goog.isDefAndNotNull(schema) || !schema.hasOwnProperty(property)) {
+                return true;
+              }
+
+              return schema[property].visible;
             };
 
             scope.$on('feature-diff-performed', updateVariables);

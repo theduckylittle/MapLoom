@@ -5,7 +5,7 @@
           ng-class="{'arrow-inactive':!geometryChanged}"></span>
   </div>
   <div id="preview-map-{{mapid}}" class="preview-map map"></div>
-  <span ng-repeat="attribute in arrows" class="">
+  <span ng-repeat="attribute in arrows" class="" ng-show="isAttributeVisible(attribute.attributename)">
     <div class="attribute-arrow" ng-class="{'authors-shown':authorsShown}">
       <span class="attribute-arrow-inner glyphicon {{icon}}" ng-class="{'arrow-inactive':!attribute.active}"
             ng-click="arrowClick($index)"></span>
