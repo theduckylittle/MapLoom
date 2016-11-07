@@ -1000,6 +1000,16 @@
         return field;
       }
     };
+
+    this.getSelectedItemPropertyValue = function(propertyName) {
+      for (var index = 0; index < selectedItemProperties_.length; index++) {
+        var prop = selectedItemProperties_[index];
+        if (prop[0] === propertyName) {
+          return prop[1];
+        }
+      }
+      return '';
+    };
   });
 
   //-- Private functions
