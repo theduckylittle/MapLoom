@@ -66,7 +66,7 @@
                tooltip-placement="top" tooltip="{{'remove_layer' | translate}}">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
-            <a type="button" ng-show="isGeogig(layer) && layer.get('metadata').name.includes('bikepath') && configService.admin"
+            <a type="button" ng-show="isGeogig(layer) && (layer.get('metadata').name.includes('bikepath') || layer.get('metadata').name.includes('building'))"
                ng-click="exportLayerNycDoitt(layer)"
                class="btn btn-sm btn-default" tooltip-append-to-body="true"
                tooltip-placement="top" tooltip="{{'export_layer' | translate}}">
