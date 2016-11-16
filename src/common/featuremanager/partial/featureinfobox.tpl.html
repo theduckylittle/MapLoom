@@ -70,7 +70,7 @@
         <!--<button type="button" tooltip-append-to-body="true" tooltip-placement="top" tooltip="{{'show_media' | translate}}"
                 class="btn btn-sm btn-default glyphicon glyphicon-camera"></button>-->
         <button type="button" ng-if="featureManagerService.getSelectedLayer().get('metadata').editable &&
-        !featureManagerService.getSelectedLayer().get('metadata').readOnly && !featureManagerService.getSelectedLayer().get('metadata').spatialFilterLayer" ng-click="featureManagerService.startAttributeEditing()"
+        !featureManagerService.getSelectedLayer().get('metadata').readOnly && !featureManagerService.getSelectedLayer().get('metadata').spatialFilterLayer && !featureManagerService.getSelectedLayer().get('metadata').name.includes('station_point')" ng-click="featureManagerService.startAttributeEditing()"
                 tooltip-append-to-body="true" tooltip-placement="top" tooltip="{{'edit_attributes' | translate}}"
                 class="btn btn-sm btn-default glyphicon glyphicon-list-alt"></button>
         <button type="button" ng-if="featureManagerService.getSelectedLayer().get('metadata').editable &&
