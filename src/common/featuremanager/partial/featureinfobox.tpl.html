@@ -74,7 +74,7 @@
                 tooltip-append-to-body="true" tooltip-placement="top" tooltip="{{'edit_attributes' | translate}}"
                 class="btn btn-sm btn-default glyphicon glyphicon-list-alt"></button>
         <button type="button" ng-if="featureManagerService.getSelectedLayer().get('metadata').editable &&
-        !featureManagerService.getSelectedLayer().get('metadata').readOnly" ng-click="featureManagerService.startGeometryEditing()"
+        !featureManagerService.getSelectedLayer().get('metadata').readOnly && !featureManagerService.getSelectedLayer().get('metadata').name.includes('station_point')" ng-click="featureManagerService.startGeometryEditing()"
                 tooltip-append-to-body="true" tooltip-placement="top" tooltip="{{'edit_geometry' | translate}}"
                 class="btn btn-sm btn-default glyphicon glyphicon-edit"></button>
       </div>
