@@ -497,7 +497,8 @@
 
       var repo = service_.getRepoById(layer.get('metadata').repoId);
       var path = layer.get('metadata').name.includes('bikepath') ? 'bikepath' : 'building';
-      var exportUrl = repo.url + '/export?format=zip&path=' + path + '&doitt=true';
+      var doitt = layer.get('metadata').name.includes('bikepath') ? true : false;
+      var exportUrl = repo.url + '/export?format=zip&path=' + path + '&doitt=' + doitt;
 
       // Modifies the URL to handle internal vs external DNS.
       var modifyUrl = function(url) {
