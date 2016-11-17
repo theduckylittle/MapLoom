@@ -496,7 +496,8 @@
       var deferredResponse = q.defer();
 
       var repo = service_.getRepoById(layer.get('metadata').repoId);
-      var exportUrl = repo.url + '/export?format=zip&path=bikepath&doitt=true';
+      var path = layer.get('metadata').name.includes('bikepath') ? 'bikepath' : 'building';
+      var exportUrl = repo.url + '/export?format=zip&path=' + path + '&doitt=true';
 
       // Modifies the URL to handle internal vs external DNS.
       var modifyUrl = function(url) {
