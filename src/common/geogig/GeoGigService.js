@@ -492,51 +492,71 @@
     this.exportNycDoitt = function(layer) {
       /* jshint es5: true */
 
-      var x2js = new X2JS();
-      var deferredResponse = q.defer();
+      var metadata = layer.get('metadata');
+      if (metadata.name.includes('bikepath')) {
+        var x2js = new X2JS();
+        var deferredResponse = q.defer();
 
-      var repo = service_.getRepoById(layer.get('metadata').repoId);
-      var path = layer.get('metadata').name.includes('bikepath') ? 'bikepath' : 'building';
-      var doitt = layer.get('metadata').name.includes('bikepath') ? true : false;
-      var exportUrl = repo.url + '/export?format=zip&path=' + path + '&doitt=' + doitt;
+        var repo = service_.getRepoById(metadata.repoId);
+        var exportUrl = repo.url + '/export?format=zip&path=' + metadata.nativeName + '&doitt=true';
 
-      // Modifies the URL to handle internal vs external DNS.
-      var modifyUrl = function(url) {
-        var base = exportUrl.split('/').slice(0, 3).join('/');
-        return base + '/' + url.split('/').slice(3).join('/');
-      };
+        // Modifies the URL to handle internal vs external DNS.
+        var modifyUrl = function(url) {
+          var base = exportUrl.split('/').slice(0, 3).join('/');
+          return base + '/' + url.split('/').slice(3).join('/');
+        };
 
-      var taskResponseHandler = function(taskUrl) {
-        return http.get(taskUrl).then(function(taskResponse) {
-          var result = x2js.xml_str2json(taskResponse.data);
-          var status = result['task']['status'];
+        var taskResponseHandler = function(taskUrl) {
+          return http.get(taskUrl).then(function(taskResponse) {
+            var result = x2js.xml_str2json(taskResponse.data);
+            var status = result['task']['status'];
 
-          switch (status) {
-            case 'FINISHED':
-              return modifyUrl(result['task']['result']['link']['_href']);
-            case 'RUNNING':
-              return timeout(function() {
-                return taskResponseHandler(taskUrl);
-              }, 5000);
-            default:
-              return q.reject();
-          }
-        });
-      };
-
-      http.get(exportUrl)
-          .then(function(response) {
-            var result = x2js.xml_str2json(response.data);
-            return modifyUrl(result['task']['link']['_href']);
-          })
-          .then(taskResponseHandler)
-          .then(function(downloadUrl) {
-            deferredResponse.resolve(downloadUrl);
-          })
-          .catch (function() {
-            deferredResponse.reject();
+            switch (status) {
+              case 'FINISHED':
+                return modifyUrl(result['task']['result']['link']['_href']);
+              case 'RUNNING':
+                return timeout(function() {
+                  return taskResponseHandler(taskUrl);
+                }, 5000);
+              default:
+                return q.reject();
+            }
           });
-      return deferredResponse.promise;
+        };
+
+        http.get(exportUrl)
+            .then(function(response) {
+              var result = x2js.xml_str2json(response.data);
+              return modifyUrl(result['task']['link']['_href']);
+            })
+            .then(taskResponseHandler)
+            .then(function(downloadUrl) {
+              deferredResponse.resolve(downloadUrl);
+            })
+            .catch (function() {
+              deferredResponse.reject();
+            });
+        return deferredResponse.promise;
+      } else {
+        return http({
+          url: metadata.url + '/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=' + metadata.name + '&outputFormat=SHAPE-ZIP&srsname=urn:ogc:def:crs:EPSG::2263',
+          method: 'GET',
+          responseType: 'arraybuffer'
+        }).then(function(response) {
+          var file = new Blob([response.data], {
+            type: 'application/zip'
+          });
+
+          var fileURL = URL.createObjectURL(file);
+          var element = document.createElement('a');
+          element.href = fileURL;
+          element.target = '_blank';
+          element.download = metadata.nativeName + '.zip';
+          var a = document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(a);
+        });
+      }
     };
   });
 }());
