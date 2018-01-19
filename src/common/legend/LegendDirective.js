@@ -118,6 +118,8 @@
                 format: 'image/png',
                 width: '20', height: '20',
                 transparent: 'true',
+                // if the server has a sepcified version, use it, otherwise default to 1.3.0
+                version: server.version !== undefined ? server.version : '1.3.0',
                 legend_options: 'fontColor:0xFFFFFF;fontAntiAliasing:true;fontSize:14;fontStyle:bold;',
                 layer: layer.get('metadata').name
               };
