@@ -402,7 +402,7 @@ var SERVER_SERVICE_USE_PROXY = true;
 
       if (goog.isDefAndNotNull(server.url)) {
         if (server.url.indexOf(location_.host()) === -1) {
-          if (server.config.alwaysAnonymous) {
+          if (server.config.requireLogin !== true) {
             server.username = translate_.instant('anonymous');
             server.authentication = undefined;
             doWork();
