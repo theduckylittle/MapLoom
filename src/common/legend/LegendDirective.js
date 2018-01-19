@@ -73,7 +73,11 @@
               }
 
               try {
-                serverService.getServerById(layer.get('metadata').serverId);
+                var server = serverService.getServerById(layer.get('metadata').serverId);
+                // WMS only.
+                if (server.ptype.indexOf('wms') < 0) {
+                  return false;
+                }
               } catch (err) {
                 // if the server id throws an error, there's no legend to be had.
                 return false;
