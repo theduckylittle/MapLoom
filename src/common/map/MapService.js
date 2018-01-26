@@ -666,7 +666,6 @@
     };
 
     this.createLayerFull = function(minimalConfig, fullConfig, server, opt_layerOrder) {
-
       // download missing projection projection if we don't have it
       if (goog.isDefAndNotNull(fullConfig)) {
         var projcode = service_.getCRSCode(fullConfig.CRS);
@@ -872,6 +871,31 @@
           } else {
             console.log('====[ Error: could not create base layer.');
           }
+        } else if (server.ptype === 'gxp_arcrestsource' && server.restConfig.capabilities.indexOf('Tilemap') < 0) {
+          // This arc service does not support tiled maps, so this will
+          // use the arc image service instead...
+          serviceSource = new ol.source.TileArcGISRest({
+            url: server.url
+          });
+
+          // patch the web mercator projection.
+          serviceSource.tileUrlFunction = function(tileCoord, pixelRatio, projection) {
+            var rest_proj = projection;
+            if (rest_proj.getCode() === 'EPSG:900913') {
+              rest_proj = ol.proj.get('EPSG:3857');
+            }
+            return this.fixedTileUrlFunction(tileCoord, pixelRatio, rest_proj);
+          };
+
+          layer = new ol.layer.Tile({
+            metadata: {
+              serverId: server.id,
+              name: minimalConfig.name,
+              title: fullConfig.title
+            },
+            visible: minimalConfig.visibility,
+            source: serviceSource
+          });
         } else if (server.ptype === 'gxp_arcrestsource') {
           var metadata = {
             serverId: server.id,
@@ -913,7 +937,6 @@
             visible: minimalConfig.visibility,
             source: serviceSource
           });
-
         } else if (server.ptype === 'gxp_tilejsonsource') {
           //currently we assume only one layer per 'server'
           var jsontile_source = server.layersConfig[0].TileJSONSource;
