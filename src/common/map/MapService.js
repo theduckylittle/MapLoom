@@ -891,6 +891,7 @@
             metadata: {
               serverId: server.id,
               name: minimalConfig.name,
+              bbox: fullConfig.extent,
               title: fullConfig.title
             },
             visible: minimalConfig.visibility,
@@ -900,6 +901,7 @@
           var metadata = {
             serverId: server.id,
             name: minimalConfig.name,
+            bbox: fullConfig.extent,
             title: fullConfig.Title
           };
           var attribution = new ol.Attribution({

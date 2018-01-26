@@ -579,7 +579,7 @@ var SERVER_SERVICE_USE_PROXY = true;
               name: server.name + '_' + name.toLowerCase() + ':' + layer_conf.id,
               srs: sr_to_crs(xhr.data.spatialReference),
               extent: {
-                srs: sr_to_crs(extent.spatialReference),
+                crs: sr_to_crs(extent.spatialReference),
                 extent: [
                   extent.xmin,
                   extent.ymin,
