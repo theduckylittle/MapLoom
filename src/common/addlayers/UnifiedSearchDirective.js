@@ -701,7 +701,7 @@
             var addRemoteLayer = function(layer) {
               // if the server for the remote layer doesn't exist,
               // then fetch the detailed information.
-              $http.get(layer.detail_url + '/get').then(function(response) {
+              return $http.get(layer.detail_url + '/get').then(function(response) {
                 var layer_def = response.data;
                 var servers = serverService.getServers();
 
@@ -731,6 +731,8 @@
                 }
               });
             };
+
+            scope.addRemoteLayer = addRemoteLayer;
 
             /** Add the selected layers to the map
              */

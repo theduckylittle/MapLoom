@@ -1201,6 +1201,7 @@
     };
 
     this.addVirtualLayer = function(minimalConfig, layerConfig, server) {
+      console.error('MINIMAL', JSON.stringify([minimalConfig, layerConfig, server]));
       var layer = service_.createLayerFull(minimalConfig, layerConfig, server);
       service_.addLayerCore(minimalConfig, layer);
     };
