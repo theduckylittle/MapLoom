@@ -189,7 +189,7 @@
       <div ng-show="searchEnabled" class="loom-search"></div>
       <div id="pulldown-menu" class="panel-group in">
         <div id="pulldown-content">
-          <div class="panel" ng-show="notificationsPanel" ng-controller="LoomNotificationController">
+          <div class="panel" ng-show="notificationsPanel" ng-if="false" ng-controller="LoomNotificationController">
             <div class="tooltip-mask" tooltip="{{notificationStartTime}}"
                  tooltip-append-to-body="true" tooltip-placement="right" data-toggle="collapse"
                  data-parent="#pulldown-content" data-target="#notification-panel"></div>
